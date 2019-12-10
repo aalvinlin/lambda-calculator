@@ -11,19 +11,16 @@ const Numbers = () => {
 
   return (
     <div className="numberButtons">
-      {/* STEP 3 - Use .map() to iterate over your array data and return a button
-       component matching the name on the provided file. Pass
-       it any props needed by the child component*/
+      {/* STEP 3 - Use .map() to iterate over your array data and return a button component matching the name on the provided file. Pass
+       it any props needed by the child component */
       // const test = numberState.map(number => { <NumberButton number={number} /> })
-      // numberState.map(number => { <h2>Help</h2> })
+      
+      
+      numberState.map(number => {
+        return <NumberButton number={number}>{number}</NumberButton>; })
 
-
-      //  for (let i = 0; i < 10; i++)
-
-        console.log(numberState)
-       }
-
-      <NumberButton number="5"></NumberButton>
+      }
+      
     </div>
   );
 };
