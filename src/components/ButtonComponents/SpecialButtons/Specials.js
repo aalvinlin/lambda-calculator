@@ -2,10 +2,11 @@
 import React, {useState} from "react";
 import {specials} from '../../../data';
 import SpecialButton from "./SpecialButton";
+import { tsPropertySignature } from "@babel/types";
 
 //Import your array data to from the provided data file
 
-const Specials = () => {
+const Specials = (props) => {
   // STEP 2 - add the imported data to state
   const [specialState, setSpecialState] = useState(specials);
 
@@ -16,7 +17,7 @@ const Specials = () => {
        it any props needed by the child component*/
        
       specialState.map(special => {
-        return <SpecialButton special={special}>{special}</SpecialButton>; })
+        return <SpecialButton special={special} buttonProcessor={props.buttonProcessor}>{special}</SpecialButton>; })
 
        }
     </div>

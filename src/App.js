@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
 
 import {Display} from "./components/DisplayComponents/Display";
@@ -6,6 +6,8 @@ import {Display} from "./components/DisplayComponents/Display";
 import Numbers from "./components/ButtonComponents/NumberButtons/Numbers";
 import Operators from "./components/ButtonComponents/OperatorButtons/Operators";
 import Specials from "./components/ButtonComponents/SpecialButtons/Specials";
+
+import updateScreen from "./scripts";
 
 // STEP 4 - import the button and display components
 // Don't forget to import any extra css/scss files you build into the correct component
@@ -20,32 +22,45 @@ function App() {
   // the "5" button, or the operator if they click one of those buttons) and then call your setter function to update state.
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
+  // set state to keep track of what to display on the calculator screen
+  const [displayValue, setDisplayValue] = useState("815");
+
+  // set state to keep track of instructions
+  const [instructions, setInstructions] = useState([]);
+
+  // function to decide what to do when a button is pressed
+  const processButton = function(button) {
+    
+    let showNewSymbol = true;
+
+    if(displayValue.includes(".") && button === ".")
+      { showNewSymbol = false; }
+
+    if (displayValue.length > 12)
+      { showNewSymbol = false; }
+
+    if (showNewSymbol)
+      { setDisplayValue(displayValue + button); }
+  }
+
   return (
     <div className="container">
       <Logo />
       <div className="App">
 
-        <Display></Display>
+        <Display value={displayValue} buttonProcessor={processButton}></Display>
 
         <div className="allButtonsContainer">
           
           <div className="specialAndNumbersContainer">
-            <Specials></Specials>
-            <Numbers></Numbers>
+            <Specials buttonProcessor={processButton}></Specials>
+            <Numbers buttonProcessor={processButton}></Numbers>
           </div>
           
-          <Operators></Operators>
-          
+          <Operators buttonProcessor={processButton}></Operators>
+
         </div>
         
-        { /* STEP 4 - Render your components here and be sure to properly import/export all files */
-
-
-          
-
-
-
-        }
       </div>
     </div>
   );
