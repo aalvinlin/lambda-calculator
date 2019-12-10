@@ -1,11 +1,28 @@
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 80vh;
+}
+
 .container {
     background-color: #c00025;
     width: 100%;
     max-width: 550px;
     border-radius: 15px;
     border: 2px solid grey;
-    padding-bottom: 25px;
+    padding: 20px;
+
 }
+
+.app {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .display {
     margin-top: 25px;
     height: 100px;
