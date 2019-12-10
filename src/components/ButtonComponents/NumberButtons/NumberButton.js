@@ -13,7 +13,7 @@ const NumberButton = (props) => {
     { buttonClass += " zero"; }
 
   return (
-    <button className={buttonClass} onClick={() => props.buttonProcessor(props.number)}>
+    <button className={buttonClass} onClick={() => props.buttonProcessor(props.number, "number")}>
       {props.number}
     </button>
   );

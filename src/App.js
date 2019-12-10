@@ -23,24 +23,84 @@ function App() {
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
   // set state to keep track of what to display on the calculator screen
-  const [displayValue, setDisplayValue] = useState("815");
+  const [displayValue, setDisplayValue] = useState("0");
+  const [isNegative, setisNegative] = useState(false);
 
   // set state to keep track of instructions
   const [instructions, setInstructions] = useState([]);
 
+  // set max display characters to display
+  const maxDisplayLength = 12;
+
   // function to decide what to do when a button is pressed
-  const processButton = function(button) {
+  const processButton = function(button, type) {
     
-    let showNewSymbol = true;
+    if (type === "special")
+    {
+      // clear all entries
+      if (button === "C")
+        {
+          setDisplayValue("0");
+          setInstructions([]);
+        }
+      
+      // take care of negatives, but don't allow negative zero
+      else if (button === "+/-" && displayValue !== "0")
+      {
+        if (isNegative)
+          {
+            setDisplayValue(displayValue.slice(1));
+            setisNegative(false);
+          }
+        else
+        {
+          setDisplayValue("-" + displayValue);
+          setisNegative(true);
+        }
+      }
+      else if (button === "%")
+      {
+        // divide by 100
+        let divided = (parseFloat(displayValue) / 100).toString();
 
-    if(displayValue.includes(".") && button === ".")
-      { showNewSymbol = false; }
+        // don't allow numbers to go past end of display (could happen with addition of decimal point)
+        if (divided.length > maxDisplayLength)
+          { divided = divided.substr(0, 12); }
 
-    if (displayValue.length > 12)
-      { showNewSymbol = false; }
+        setDisplayValue(divided);
 
-    if (showNewSymbol)
-      { setDisplayValue(displayValue + button); }
+      }
+
+    }
+
+    else if (type === "number")
+    {
+      let showNewSymbol = true;
+
+      // don't allow more than 1 decimal point
+      if(displayValue.includes(".") && button === ".")
+        { showNewSymbol = false; }
+
+      // don't allow numbers to go past end of display
+      if (displayValue.length > maxDisplayLength)
+        { showNewSymbol = false; }
+
+      if (showNewSymbol)
+        {
+          // don't add a leading zero
+          if (displayValue === "0")
+            { setDisplayValue(button); }
+          
+          // append digit to end of string
+          else
+            setDisplayValue(displayValue + button);
+        }
+    }
+    else if (type === "operator")
+    {
+
+    }
+    
   }
 
   return (
