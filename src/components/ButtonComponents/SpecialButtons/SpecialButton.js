@@ -3,7 +3,7 @@ import { tsPropertySignature } from "@babel/types";
 
 const SpecialButton = (props) => {
   return (
-    <button className="specialButton">
+    <button className="button specialButton">
       {props.special}
     </button>
   );

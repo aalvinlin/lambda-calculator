@@ -17,6 +17,9 @@
 
     border: none;
     border-radius: 50%;
+
+    /* box-shadow: 0 1px 0 rgb(0, 0, 0, 0.5); */
+    box-shadow: inset 1px 1px 1px rgb(255, 255, 255, 0.5), 4px 4px 2px rgb(0, 0, 0, 0.5);
 }
 
 /* CSS for numbers 0-9 and . */
@@ -54,6 +57,11 @@
 }
 
 /* CSS for special buttons above the number buttons */
-.specialButton{
+.specialButtons{
+    display: flex;
+    justify-content: space-between;
+}
+
+    .specialButton{
     background-color: #225d9e;
 }
