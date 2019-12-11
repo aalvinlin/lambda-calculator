@@ -35,9 +35,11 @@ function App() {
   // keep track of whether to display an error for dividing by zero
   const [dividedByZero, setDividedByZero] = useState(false);
 
+  // specify whether the next button push should append to the display or replace it (after an operator press and after pressing "equals")
+  const [replaceResult, setReplaceResult] = useState(false);
+
   // function to decide what to do when a button is pressed
   const processButton = function(button, type) {
-
     
     console.log(instructions, displayValue);
 
@@ -125,6 +127,13 @@ function App() {
           if (displayValue === "0" && button !== ".")
             { setDisplayValue(button); }
           
+          // don't append to result if after an operator press or after pressing equals
+          else if (replaceResult)
+            {
+              setDisplayValue(button);
+              setReplaceResult(false);
+            }
+          
           // append digit to end of string
           else
             setDisplayValue(displayValue + button);
@@ -133,6 +142,9 @@ function App() {
     else if (type === "operator")
     {
       let operator = button;
+
+      // after any operator press, new keypresses should clear the display and replace it with the new value.
+      setReplaceResult(true);
 
       if (operator === "equals")
         {
@@ -192,9 +204,6 @@ function App() {
       else if (instructions.length === 0)
         {
           setInstructions(instructions.concat(parseFloat(displayValue), operator));
-          
-          // clear displayValue for second operand
-          setDisplayValue("0");
         }
       
       // replace current operator if user decides to use a different one
