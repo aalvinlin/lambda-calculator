@@ -13,7 +13,11 @@ const NumberButton = (props) => {
     { buttonClass += " zero"; }
 
   return (
-    <button className={buttonClass} onClick={() => props.buttonProcessor(props.number, "number")}>
+    <button className={buttonClass} id={"button" + props.number}
+      onClick={() => props.buttonProcessor(props.number, "number")}
+      onMouseDown={ () => document.getElementById("button" + props.number).classList.add("buttonPushed") }
+      onMouseUp={ () => document.getElementById("button" + props.number).classList.remove("buttonPushed") }
+      >
       {props.number}
     </button>
   );

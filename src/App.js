@@ -32,20 +32,38 @@ function App() {
   // set max display characters to display
   const maxDisplayLength = 12;
 
+  // keep track of whether to display an error for dividing by zero
+  const [dividedByZero, setDividedByZero] = useState(false);
+
   // function to decide what to do when a button is pressed
   const processButton = function(button, type) {
+
     
+    console.log(instructions, displayValue);
+
+    // clear error message only via the "clear" button
+    if (dividedByZero)
+    {
+      if (button === "clear")
+      {
+        setDisplayValue("0");
+        setDividedByZero(false);
+      }
+      else
+        { return; }
+    }
+
     if (type === "special")
     {
       // clear all entries
-      if (button === "C")
+      if (button === "clear")
         {
           setDisplayValue("0");
           setInstructions([]);
         }
       
       // take care of negatives, but don't allow negative zero
-      else if (button === "+/-" && displayValue !== "0")
+      else if (button === "negate" && displayValue !== "0")
       {
         if (isNegative)
           {
@@ -54,20 +72,36 @@ function App() {
           }
         else
         {
-          setDisplayValue("-" + displayValue);
+          setDisplayValue("−" + displayValue);
           setisNegative(true);
         }
       }
-      else if (button === "%")
+      else if (button === "percent")
       {
         // divide by 100
-        let divided = (parseFloat(displayValue) / 100).toString();
+        
+        // avoid using parseFloat due to precision loss
+        // let dividedBy100 = undefined;
+
+        // if (displayValue.includes("."))
+        //   {
+        //     let parts = displayValue.split(".");
+        //     let wholeNumberPart = parts[0];
+        //     let decimalPart = parts[1];
+
+        // unfinished
+        //     dividedBy100 = wholeNumberPart.slice(0, wholeNumberPart.length - 3) + "." + wholeNumberPart.slice(wholeNumberPart.length - 3) + decimalPart;
+        //   }
+        // else
+          // { dividedBy100 = (parseFloat(displayValue) / 100).toString(); }
+
+        let dividedBy100 = (parseFloat(displayValue) / 100).toString();
 
         // don't allow numbers to go past end of display (could happen with addition of decimal point)
-        if (divided.length > maxDisplayLength)
-          { divided = divided.substr(0, 12); }
+        if (dividedBy100.length > maxDisplayLength)
+          { dividedBy100 = dividedBy100.substr(0, 12); }
 
-        setDisplayValue(divided);
+        setDisplayValue(dividedBy100);
 
       }
 
@@ -98,7 +132,78 @@ function App() {
     }
     else if (type === "operator")
     {
+      let operator = button;
 
+      if (operator === "equals")
+        {
+          // leave display unchanged if there is only one operand
+          if (instructions.length > 1)
+            {
+              // store previous displayValue as second operand
+              let operand2 = parseFloat(displayValue);
+
+              // get first operand and operator
+              const [operand1, operator] = instructions;
+
+              let divByZero = false;
+              let result = undefined;
+
+              // addition
+              if (operator === "add")
+                { result = operand1 + operand2; }
+
+              // subtraction
+              else if (operator === "subtract")
+              { result = operand1 - operand2; }
+              
+              // multiplication
+              else if (operator === "multiply")
+              { result = operand1 * operand2; }
+              
+              // prevent division by 0
+              if (operator === "divide" && operand2 === 0)
+                { divByZero = true; }
+              
+              // division
+              else if (operator === "divide")
+                { result = (operand1 / operand2).toString().slice(0, maxDisplayLength); }
+
+              // display the result
+              if (divByZero)
+                {
+                  setDisplayValue("Error: div by 0");
+                  setDividedByZero(true);
+                }
+
+              else
+                {
+                  setDisplayValue(result);
+
+                  // store result as first operand for further operations
+                  setInstructions([result]);
+
+                }
+            }
+
+        }
+      
+      // store previous displayValue as first operand
+      // also store the operand
+      else if (instructions.length === 0)
+        {
+          setInstructions(instructions.concat(parseFloat(displayValue), operator));
+          
+          // clear displayValue for second operand
+          setDisplayValue("0");
+        }
+      
+      // replace current operator if user decides to use a different one
+      else if (instructions.length === 2)
+        {
+          setInstructions([instructions[0], operator]);
+          
+        }
+      
     }
     
   }

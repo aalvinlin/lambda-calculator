@@ -17,7 +17,7 @@ const Specials = (props) => {
        it any props needed by the child component*/
        
       specialState.map(special => {
-        return <SpecialButton special={special} buttonProcessor={props.buttonProcessor}>{special}</SpecialButton>; })
+        return <SpecialButton char={special.char} value={special.value} buttonProcessor={props.buttonProcessor}>{special.value}</SpecialButton>; })
 
        }
     </div>
