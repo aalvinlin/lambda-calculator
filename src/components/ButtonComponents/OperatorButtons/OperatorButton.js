@@ -1,9 +1,15 @@
 import React from "react";
 
-const OperatorButton = () => {
+const OperatorButton = (props) => {
   return (
-    <>
-      {/* Display a button element rendering the data being passed down from the parent container on props */}
-    </>
+    <button className="button operatorButton" id={"button" + props.value}
+      onClick={() => props.buttonProcessor(props.value, "operator")}
+      onMouseDown={ () => document.getElementById("button" + props.value).classList.add("buttonPushed") }
+      onMouseUp={ () => document.getElementById("button" + props.value).classList.remove("buttonPushed") }
+      >
+      {props.char}
+    </button>
   );
 };
+
+export default OperatorButton;

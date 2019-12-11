@@ -9,24 +9,40 @@ const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."];
 const operators = [
   {
     char: "/",
-    value: "/"
+    value: "divide"
   },
   {
-    char: "x",
-    value: "*"
+    char: "×",
+    value: "multiply"
   },
   {
-    char: "-",
-    value: "-"
+    char: "−",
+    value: "subtract"
   },
   {
     char: "+",
-    value: "+"
+    value: "add"
   },
   {
     char: "=",
-    value: "="
+    value: "equals"
   }
 ];
 
-const specials = ["C", "+/-", "%"];
+const specials = [
+  {
+    char: "C",
+    value: "clear"
+  },
+  {
+    char: "+/−",
+    value: "negate"
+  },
+  {
+    char: "%",
+    value: "percent"
+  }
+  
+];
+
+export {numbers, operators, specials};
