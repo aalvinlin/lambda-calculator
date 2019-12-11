@@ -199,19 +199,15 @@ function App() {
 
         }
       
-      // store previous displayValue as first operand
-      // also store the operand
+      // store displayValue and the operator that was just pressed (this will replace the previous operator, if any, that was pressed)
+
+      // first time using the calculator: store the currently displayed value as the first item in the array
       else if (instructions.length === 0)
-        {
-          setInstructions(instructions.concat(parseFloat(displayValue), operator));
-        }
+        { setInstructions([parseFloat(displayValue), operator]); }
       
-      // replace current operator if user decides to use a different one
-      else if (instructions.length === 2)
-        {
-          setInstructions([instructions[0], operator]);
-          
-        }
+      // store the new operator as the second element in the array
+      else
+        { setInstructions([instructions[0], operator]); }
       
     }
     
