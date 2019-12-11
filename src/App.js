@@ -121,8 +121,8 @@ function App() {
 
       if (showNewSymbol)
         {
-          // don't add a leading zero
-          if (displayValue === "0")
+          // don't add a leading zero unless the decimal key was pressed
+          if (displayValue === "0" && button !== ".")
             { setDisplayValue(button); }
           
           // append digit to end of string
@@ -177,7 +177,7 @@ function App() {
 
               else
                 {
-                  setDisplayValue(result);
+                  setDisplayValue(result.toString());
 
                   // store result as first operand for further operations
                   setInstructions([result]);
