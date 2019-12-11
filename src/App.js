@@ -74,7 +74,7 @@ function App() {
           }
         else
         {
-          setDisplayValue("−" + displayValue);
+          setDisplayValue("-" + displayValue);
           setisNegative(true);
         }
       }
@@ -166,11 +166,11 @@ function App() {
 
               // subtraction
               else if (operator === "subtract")
-              { result = operand1 - operand2; }
+                { result = operand1 - operand2; }
               
               // multiplication
               else if (operator === "multiply")
-              { result = operand1 * operand2; }
+                { result = operand1 * operand2; }
               
               // prevent division by 0
               if (operator === "divide" && operand2 === 0)
